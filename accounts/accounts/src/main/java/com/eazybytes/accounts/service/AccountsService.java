@@ -11,6 +11,7 @@ import com.eazybytes.accounts.mapper.AccountsMapper;
 import com.eazybytes.accounts.mapper.CustomerMapper;
 import com.eazybytes.accounts.repository.AccountsRepository;
 import com.eazybytes.accounts.repository.CustomerRepository;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,6 +49,33 @@ public class AccountsService {
         CustomerDto customerDto = CustomerMapper.mapToCustomerDto(customer, new CustomerDto());
         customerDto.setAccountsDto(AccountsMapper.mapToAccountsDto(accounts,new AccountsDto()));
         return customerDto;
+    }
+
+    public boolean updateAccount(CustomerDto customerDto){
+        boolean isUpdated=false;
+        AccountsDto accountsDto = customerDto.getAccountsDto();
+        if(accountsDto != null){
+            Accounts accounts = accountsRepository.findById(accountsDto.getAccountNumber()).orElseThrow(()->
+                    new ResourceNotFoundException("Account","accountNumber",accountsDto.getAccountNumber().toString()));
+            AccountsMapper.mapToAccounts(accountsDto,accounts);
+            accountsRepository.save(accounts);
+
+            Customer customer = customerRepository.findById(accounts.getCustomerId()).orElseThrow(()->
+                    new ResourceNotFoundException("Customer","Customer ID",accounts.getCustomerId().toString()));
+            CustomerMapper.mapToCustomer(customerDto,customer);
+            customerRepository.save(customer);
+            isUpdated=true;
+        }
+        return isUpdated;
+    }
+
+    @Transactional
+    public boolean deleteAccountByMobileNumber(String mobileNumber){
+        Customer customer = customerRepository.findByMobileNumber(mobileNumber).orElseThrow(()->
+                new ResourceNotFoundException("Customer","Mobile Number",mobileNumber));
+        accountsRepository.deleteByCustomerId(customer.getCustomerId());
+        customerRepository.deleteById(customer.getCustomerId());
+        return true;
     }
 
     private Accounts createNewAccount(Customer customer){
