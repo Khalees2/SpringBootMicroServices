@@ -15,4 +15,13 @@ spring:
       ddl-auto: update
     show-sql: true
 
+accounts:
+  message: "Welcome to Khalees2 accounts related local APIs"
+  contactDetails:
+    name: "Salman Khaleel Sab - Developer"
+    email: "salmank640@gmail.com"
+  onCallSupport:
+    - 123456789
+    - 987654321
+
 

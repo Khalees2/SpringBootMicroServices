@@ -1,6 +1,7 @@
 package com.eazybytes.accounts.controller;
 
 import com.eazybytes.accounts.constants.AccountsConstants;
+import com.eazybytes.accounts.dto.AccountsContactInfoDto;
 import com.eazybytes.accounts.dto.CustomerDto;
 import com.eazybytes.accounts.dto.ResponseDto;
 import com.eazybytes.accounts.service.AccountsService;
@@ -27,10 +28,12 @@ import org.springframework.web.bind.annotation.*;
 public class AccountController {
 
     private AccountsService accountsService;
+    private AccountsContactInfoDto accountsContactInfoDto;
 
     @Autowired
-    public AccountController(AccountsService accountsService){
+    public AccountController(AccountsService accountsService, AccountsContactInfoDto accountsContactInfoDto){
         this.accountsService =accountsService;
+        this.accountsContactInfoDto = accountsContactInfoDto;
     }
 
     @Operation(
@@ -85,5 +88,12 @@ public class AccountController {
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new ResponseDto(AccountsConstants.MESSAGE_500,AccountsConstants.MESSAGE_500));
         }
+    }
+
+    @GetMapping("/contact-info")
+    public ResponseEntity<AccountsContactInfoDto> getContactInfo(){
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(accountsContactInfoDto);
     }
 }
