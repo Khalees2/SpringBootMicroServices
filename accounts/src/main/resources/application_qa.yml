@@ -1,0 +1,13 @@
+spring:
+  config:
+    activate:
+      on-profile: "qa"
+
+accounts:
+  message: "Welcome to Khalees2 accounts related APIs in Testing environment"
+  contactDetails:
+    name: "Salman Khaleel Sab - QA Lead"
+    email: "salmank7640@gmail.com"
+  onCallSupport:
+    - 4546546231
+    - 1111111111
