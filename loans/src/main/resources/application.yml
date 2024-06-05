@@ -18,9 +18,9 @@ spring:
     import:
       - "application_qa.yml"
       - "application_prod.yml"
-    profiles:
-      active:
-        - "qa"
+  profiles:
+    active:
+      - "qa"
 
 loans:
   message: "Welcome to Khalees2 Loans related local APIs"

@@ -23,7 +23,7 @@ spring:
       - "qa"
 
 accounts:
-  message: "Welcome to Khalees2 accounts related local APIs"
+  message: "Welcome to Khalees2 Accounts related local APIs"
   contactDetails:
     name: "Salman Khaleel Sab - Developer"
     email: "salmank640@gmail.com"
