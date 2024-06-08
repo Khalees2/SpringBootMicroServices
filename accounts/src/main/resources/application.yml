@@ -1,6 +1,12 @@
 server:
   port:8080
 spring:
+  application:
+    name: "accounts"
+  profiles:
+    active: "prod"
+  config:
+    import: "optional:configserver:http://localhost:8071/"
   datasource:
     url: jdbc:h2:mem:testdb
     driverClassName: org.h2.Driver
@@ -14,21 +20,5 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
-  config:
-    import:
-      - "application_qa.yml"
-      - "application_prod.yml"
-  profiles:
-    active:
-      - "qa"
-
-accounts:
-  message: "Welcome to Khalees2 Accounts related local APIs"
-  contactDetails:
-    name: "Salman Khaleel Sab - Developer"
-    email: "salmank640@gmail.com"
-  onCallSupport:
-    - 123456789
-    - 987654321
 
 
