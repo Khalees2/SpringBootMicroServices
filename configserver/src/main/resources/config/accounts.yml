@@ -1,0 +1,34 @@
+server:
+  port:8080
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driverClassName: org.h2.Driver
+    username: sa
+    password: ''
+  h2:
+    console:
+      enabled: true
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  config:
+    import:
+      - "accounts-qa.yml"
+      - "accounts-prod.yml"
+  profiles:
+    active:
+      - "qa"
+
+accounts:
+  message: "Welcome to Khalees2 Accounts related local APIs"
+  contactDetails:
+    name: "Salman Khaleel Sab - Developer"
+    email: "salmank640@gmail.com"
+  onCallSupport:
+    - 123456789
+    - 987654321
+
+
