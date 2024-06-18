@@ -53,7 +53,7 @@
 				<version>3.4.2</version>
 				<configuration>
 					<to>
-						<image>khalees2/${project.artifactId}:v2</image>
+						<image>khalees2/${project.artifactId}:v3</image>
 					</to>
 				</configuration>
 			</plugin>
