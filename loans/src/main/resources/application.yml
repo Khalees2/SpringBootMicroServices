@@ -13,9 +13,9 @@ spring:
     password: root
   jpa:
     show-sql: true
-    sql:
-      init:
-        mode: always
+  sql:
+    init:
+      mode: always
 management:
   endpoints:
     web:

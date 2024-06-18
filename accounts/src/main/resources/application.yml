@@ -11,11 +11,11 @@ spring:
     url: jdbc:mysql://localhost:3307/accountsdb
     username: root
     password: root
+  sql:
+    init:
+      mode: always
   jpa:
     show-sql: true
-    sql:
-      init:
-        mode: always
 
 management:
   endpoints:
