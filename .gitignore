@@ -1,2 +1,7 @@
 /loans/target/
 /loans/loans.iml
+/eurekaserver/.mvn/
+/eurekaserver/eurekaserver.iml
+/eurekaserver/HELP.md
+/eurekaserver/mvnw
+/eurekaserver/mvnw.cmd
