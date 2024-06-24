@@ -6,3 +6,6 @@
 /eurekaserver/mvnw
 /eurekaserver/mvnw.cmd
 /.idea/
+/gatewayserver/.mvn/
+/gatewayserver/mvnw.cmd
+/gatewayserver/mvnw
