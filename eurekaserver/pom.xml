@@ -70,7 +70,7 @@
 				<version>3.4.2</version>
 				<configuration>
 					<to>
-						<image>khalees2/${project.artifactId}:v4</image>
+						<image>khalees2/${project.artifactId}:v5</image>
 					</to>
 				</configuration>
 			</plugin>
