@@ -9,6 +9,9 @@ spring:
         locator:
           enabled: false
           lowerCaseServiceId: true
+      httpclient:
+        connection-timeout: 1000
+        response-timeout: 5s
 
 management:
   endpoints:
@@ -35,6 +38,4 @@ resilience4j.circuitbreaker:
       permittedNumberOfCallsInHalfOpenState: 2
       failureRateThreshold: 50
       waitDurationInOpenState: 10000
-
-
 
