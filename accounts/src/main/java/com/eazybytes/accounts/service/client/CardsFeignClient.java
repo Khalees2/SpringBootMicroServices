@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient("cards") //Name of the application with which we registered with Eureka Server. It is not DNS Server name.
+@FeignClient(name = "cards", fallback = CardsFallBack.class) //Name of the application with which we registered with Eureka Server. It is not DNS Server name.
 public interface CardsFeignClient {
 
     //Below method declaration should match the REST API end point method of Cards Controller

@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(value = "loans")
+@FeignClient(name = "loans",fallback = LoansFallBack.class)
 public interface LoansFeignClient {
 
     //Below method declaration should match the REST API end point method of Loans Controller
