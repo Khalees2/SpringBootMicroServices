@@ -9,3 +9,7 @@
 /gatewayserver/.mvn/
 /gatewayserver/mvnw.cmd
 /gatewayserver/mvnw
+/message/.mvn/
+/message/HELP.md
+/message/mvnw
+/message/mvnw.cmd
