@@ -2,6 +2,7 @@ package com.eazybytes.accounts.service;
 
 import com.eazybytes.accounts.constants.AccountsConstants;
 import com.eazybytes.accounts.dto.AccountsDto;
+import com.eazybytes.accounts.dto.AccountsMsgDto;
 import com.eazybytes.accounts.dto.CustomerDto;
 import com.eazybytes.accounts.entity.Accounts;
 import com.eazybytes.accounts.entity.Customer;
@@ -13,7 +14,10 @@ import com.eazybytes.accounts.repository.AccountsRepository;
 import com.eazybytes.accounts.repository.CustomerRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -24,11 +28,16 @@ import java.util.Random;
 @AllArgsConstructor
 public class AccountsService {
 
+    private  static final Logger log = LoggerFactory.getLogger(AccountsService.class);
+
     @Autowired
     private AccountsRepository accountsRepository;
 
     @Autowired
     private CustomerRepository customerRepository;
+
+    @Autowired
+    private final StreamBridge streamBridge;
 
     public void createAccount(CustomerDto customerDto){
         Customer customer = CustomerMapper.mapToCustomer(customerDto,new Customer());
@@ -37,7 +46,8 @@ public class AccountsService {
             throw new CustomerAlreadyExistException("Customer already registered with the given mobile number");
         }else{
             Customer savedCustomer = customerRepository.save(customer);
-            accountsRepository.save(createNewAccount(savedCustomer));
+            Accounts savedAccount = accountsRepository.save(createNewAccount(savedCustomer));
+            sendCommunication(savedAccount,savedCustomer);
         }
     }
 
@@ -76,6 +86,20 @@ public class AccountsService {
         return true;
     }
 
+    @Transactional
+    public boolean updateCommunicationStatus(Long accountNumber){
+        boolean isUpdated = false;
+        if(accountNumber != null){
+            Accounts accounts = accountsRepository.findById(accountNumber).orElseThrow(
+                    ()-> new ResourceNotFoundException("Account", "Account Number", accountNumber.toString())
+            );
+            accounts.setCommunicationSw(true);
+            accountsRepository.save(accounts);
+            isUpdated = true;
+        }
+        return isUpdated;
+    }
+
     private Accounts createNewAccount(Customer customer){
         Accounts accounts = new Accounts();
         accounts.setCustomerId(customer.getCustomerId());
@@ -84,5 +108,12 @@ public class AccountsService {
         accounts.setAccountType(AccountsConstants.SAVINGS);
         accounts.setBranchAddress(AccountsConstants.ADDRESS);
         return accounts;
+    }
+
+    private void sendCommunication(Accounts account, Customer customer){
+        var accountsMsgDto = new AccountsMsgDto(account.getAccountNumber(),customer.getName(),customer.getEmail(),customer.getMobileNumber());
+        log.info("Sending Communication request for :"+accountsMsgDto);
+        var result = streamBridge.send("sendCommunication-out-0",accountsMsgDto);
+        log.info("Is communication publishing request successful : "+result);
     }
 }
