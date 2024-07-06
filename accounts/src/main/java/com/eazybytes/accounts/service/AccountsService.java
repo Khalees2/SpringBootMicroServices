@@ -17,7 +17,7 @@ import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.stream.function.StreamBridge;
+//import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -36,8 +36,8 @@ public class AccountsService {
     @Autowired
     private CustomerRepository customerRepository;
 
-    @Autowired
-    private final StreamBridge streamBridge;
+    /*@Autowired
+    private final StreamBridge streamBridge;*/
 
     public void createAccount(CustomerDto customerDto){
         Customer customer = CustomerMapper.mapToCustomer(customerDto,new Customer());
@@ -47,7 +47,7 @@ public class AccountsService {
         }else{
             Customer savedCustomer = customerRepository.save(customer);
             Accounts savedAccount = accountsRepository.save(createNewAccount(savedCustomer));
-            sendCommunication(savedAccount,savedCustomer);
+            //sendCommunication(savedAccount,savedCustomer);
         }
     }
 
@@ -110,10 +110,10 @@ public class AccountsService {
         return accounts;
     }
 
-    private void sendCommunication(Accounts account, Customer customer){
+    /*private void sendCommunication(Accounts account, Customer customer){
         var accountsMsgDto = new AccountsMsgDto(account.getAccountNumber(),customer.getName(),customer.getEmail(),customer.getMobileNumber());
         log.info("Sending Communication request for :"+accountsMsgDto);
         var result = streamBridge.send("sendCommunication-out-0",accountsMsgDto);
         log.info("Is communication publishing request successful : "+result);
-    }
+    }*/
 }
