@@ -26,6 +26,9 @@ spring:
         enabled: true
     function:
       definition: updateCommunication
+    kubernetes:
+      discovery:
+        all-namespaces: true
 
 management:
   endpoints:
@@ -50,16 +53,6 @@ management:
 endpoints:
   shutdown:
     enabled: true
-
-eureka:
-  instance:
-    preferIpAddress: true
-  client:
-    fetchRegistry: true
-    registerWithEureka: true
-    serviceUrl:
-      defaultZone: http://localhost:8070/eureka/
-
 
 info:
   app:
