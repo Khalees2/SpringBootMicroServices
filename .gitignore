@@ -39,3 +39,15 @@
 /helm/environments/prod-env/templates/
 /helm/environments/qa-env/charts/
 /helm/environments/qa-env/templates/
+/helm/environments/qa-env/Chart.lock
+/helm/environments/dev-env/Chart.lock
+/helm/environments/prod-env/Chart.lock
+/helm/eazybank-services/accounts/Chart.lock
+/helm/eazybank-services/cards/Chart.lock
+/helm/eazybank-services/loans/Chart.lock
+/helm/eazybank-services/message/Chart.lock
+/helm/eazybank-services/configserver/Chart.lock
+/helm/eazybank-services/gatewayserver/Chart.lock
+/helm/kafka/Chart.lock
+/helm/keycloak/Chart.lock
+
