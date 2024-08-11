@@ -1,0 +1,8 @@
+accounts:
+  message: "Welcome to Khalees2 accounts related APIs in Production environment"
+  contactDetails:
+    name: "Salman Khaleel Sab - Product Owner"
+    email: "salmank71640@gmail.com"
+  onCallSupport:
+    - 0987653421
+    - 3864392947

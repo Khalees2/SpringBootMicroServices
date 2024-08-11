@@ -5,6 +5,7 @@ import com.eazybytes.accounts.dto.AccountsContactInfoDto;
 import com.eazybytes.accounts.dto.CustomerDto;
 import com.eazybytes.accounts.dto.ResponseDto;
 import com.eazybytes.accounts.service.AccountsService;
+import io.github.resilience4j.retry.annotation.Retry;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -95,5 +96,20 @@ public class AccountController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(accountsContactInfoDto);
+    }
+
+    @Retry(name = "getBuildInfo", fallbackMethod = "getBuildInfoFallBack")
+    @GetMapping("/build-info")
+    public ResponseEntity<String> getBuildInfo(){
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body("build-info");
+    }
+
+    //Method signature should exactly match as getBuildInfo() plus Throwable param
+    public ResponseEntity<String> getBuildInfoFallBack(Throwable throwable){
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body("build-info-fall-back");
     }
 }
